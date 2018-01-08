@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import cv2
 import tensorflow as tf
 from retrain_for_video import VidRetrain
@@ -11,6 +13,8 @@ model_info = get_model_info()
 props = Props()
 
 graph, bottleneck_tensor, resized_image_tensor = create_model_graph(model_info, model_path)
+accuracy = 0.0
+category = 'NO_CAT'
 
 with tf.Session(graph=graph) as sess:
     video = Video(interval=0.1)
@@ -44,7 +48,11 @@ with tf.Session(graph=graph) as sess:
     # will show updated image after one cycle in the while loop
     i = 0
     while(True):
-        imgs = video.get_images(10,is_show=True)
+        try:
+            imgs = video.get_images(10, is_show=True, category_name=category, accuracy=accuracy)
+        except GeneratorExit:
+            print('application stopped by user')
+            break
 
         bottlenecks = []
         for img in imgs:
@@ -53,13 +61,14 @@ with tf.Session(graph=graph) as sess:
             bottlenecks.append(tensor)
 
         #TODO dodac kategorie przewciwne (jakies losowe obrazki inne
-        categories_index = [1 for i in range(len(bottlenecks))]
+        categories_index = [i % 2 for i in range(len(bottlenecks))]
 
         train_summary, _ = sess.run([merged, train_step],
                                     feed_dict={bottleneck_input: bottlenecks,ground_truth_input: categories_index})
         train_writer.add_summary(train_summary, i)
-        i += 1
 
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            cv2.destroyAllWindows()
-            break
+        train_accuracy, cross_entropy_value = sess.run([evaluation_step, cross_entropy],
+                                       feed_dict={bottleneck_input: bottlenecks, ground_truth_input: categories_index})
+        accuracy = train_accuracy
+
+        i += 1

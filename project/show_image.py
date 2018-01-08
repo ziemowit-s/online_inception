@@ -10,7 +10,10 @@ class Video:
         self.interval = interval * 1000
         self.cap = cv2.VideoCapture(0)
 
-    def get_images(self, num, is_show=False):
+    def get_images(self, num, is_show=False, category_name=None, accuracy=None):
+        category = 'NO_CAT' if category_name is None else str(category_name)
+        accuracy = '0' if accuracy is None else str(accuracy)
+
         n = 0
         imgs = []
         init = time.time() * 1000
@@ -33,7 +36,13 @@ class Video:
             imgs.append(img_byte)
 
             if is_show:
+                cv2.rectangle(img, (0, 0), (DIM[0], 25), (0, 0, 0), -1)
+                cv2.putText(img, "category: %s, acc: %s" % (category, accuracy), (10, 19), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (255,255,255))
                 cv2.imshow('frame', img)
+
+                if cv2.waitKey(1) & 0xFF == ord('q'):
+                    cv2.destroyAllWindows()
+                    raise GeneratorExit()
 
             if n >= num:
                 break
@@ -42,5 +51,6 @@ class Video:
 
 if __name__ == '__main__':
     video = Video('banana', 0.3)
-    imgs = video.get_images(is_show=True)
+
+    imgs = video.get_images(100, is_show=True, category_name='NO_CAT', accuracy='0.39')
     print(len(imgs))
