@@ -1,5 +1,6 @@
 import tensorflow as tf
-from retrain_for_video import VidRetrain
+
+from old_retrain_for_video import VidRetrain
 from show_image import Video
 from utils import create_model_graph, get_model_info, add_jpeg_decoding, Props
 
