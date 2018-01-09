@@ -1,6 +1,3 @@
-from datetime import datetime
-
-import cv2
 import tensorflow as tf
 from retrain_for_video import VidRetrain
 from show_image import Video
@@ -13,8 +10,6 @@ model_info = get_model_info()
 props = Props()
 
 graph, bottleneck_tensor, resized_image_tensor = create_model_graph(model_info, model_path)
-accuracy = 0.0
-category = 'NO_CAT'
 
 with tf.Session(graph=graph) as sess:
     video = Video(interval=0.1)
@@ -26,14 +21,12 @@ with tf.Session(graph=graph) as sess:
         model_info['input_std'])
 
     # Add the new layer that we'll be training.
-    (train_step, cross_entropy, bottleneck_input, ground_truth_input,
-     final_tensor) = retrain.add_final_training_ops(
+    (train_step, cross_entropy, bottleneck_input, ground_truth_input, final_tensor) = retrain.add_final_training_ops(
         CLASS_NUMBER, props.final_tensor_name, bottleneck_tensor,
         model_info['bottleneck_tensor_size'], model_info['quantize_layer'])
 
     # Create the operations we need to evaluate the accuracy of our new layer.
-    evaluation_step, prediction = retrain.add_evaluation_step(
-        final_tensor, ground_truth_input)
+    evaluation_step, prediction = retrain.add_evaluation_step(final_tensor, ground_truth_input)
 
     # Create all Summaries
     merged = tf.summary.merge_all()
@@ -49,7 +42,7 @@ with tf.Session(graph=graph) as sess:
     i = 0
     while(True):
         try:
-            imgs = video.get_images(10, is_show=True, category_name=category, accuracy=accuracy)
+            imgs = video.get_images(10, is_show=True)
         except GeneratorExit:
             print('application stopped by user')
             break
