@@ -3,7 +3,7 @@ from tensorflow.python.platform import gfile
 
 
 class Props:
-    image_dir = '../flower_photos'
+    image_dir = '../dara/flower_photos'
     model_dir = '../data/inception_dir'
     bottleneck_dir = '../data/tmp/bottleneck'
     final_tensor_name = 'final_result'
