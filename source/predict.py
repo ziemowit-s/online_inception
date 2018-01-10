@@ -7,7 +7,7 @@ from utils import create_model_graph, get_model_info, add_jpeg_decoding, Props
 
 CLASS_NUMBER = 2
 
-model_path = '../tmp/output_graph.pb' #'../inception_dir/classify_image_graph_def.pb'
+model_path = '../data/tmp/output_graph.pb' #'../inception_dir/classify_image_graph_def.pb'
 model_info = get_model_info()
 props = Props()
 
