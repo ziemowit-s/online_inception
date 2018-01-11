@@ -40,7 +40,7 @@ with tf.Session(graph=graph) as sess:
             print('application stopped by user')
             break
 
-        for img in imgs:
+        for img, key_pressed in imgs:
             tensor = retrain.run_bottleneck_on_image(sess, img, jpeg_data_tensor, decoded_image_tensor,
                                                      resized_image_tensor, bottleneck_tensor)
 

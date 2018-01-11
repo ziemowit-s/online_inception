@@ -17,7 +17,7 @@ class Video:
         n = 0
         imgs = []
         init = time.time() * 1000
-        key_pressed = None
+        key_pressed = -1
 
         while (True):
             curr = time.time() * 1000
@@ -34,23 +34,24 @@ class Video:
             # perform the actual resizing of the image and show it
             img = cv2.resize(img, DIM, interpolation=cv2.INTER_AREA)
             img_byte = cv2.imencode('.jpg', img)[1].tostring()
-            imgs.append(img_byte)
 
             if is_show:
                 cv2.rectangle(img, (0, 0), (DIM[0], 25), (0, 0, 0), -1)
-                cv2.putText(img, "category: %s, acc: %s" % (category, accuracy), (10, 19), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (255,255,255))
+                cv2.putText(img, "cat: %s, acc: %s" % (category, accuracy), (10, 19), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (255,255,255))
                 cv2.imshow('frame', img)
 
                 key_pressed = cv2.waitKey(1) & 0xFF
-                key_pressed = chr(key_pressed) if key_pressed < 255 else None
+                key_pressed = chr(key_pressed) if key_pressed < 255 else -1
                 if key_pressed == 'q':
                     cv2.destroyAllWindows()
                     raise GeneratorExit()
 
+            imgs.append((img_byte, key_pressed))
+
             if n >= num:
                 break
 
-        return imgs, key_pressed if key_pressed < 254 else None
+        return imgs
 
 if __name__ == '__main__':
     video = Video('banana', 0.3)

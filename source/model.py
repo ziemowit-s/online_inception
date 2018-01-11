@@ -2,7 +2,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.contrib.quantize.python import quant_ops
 
-class VidRetrain:
+class Model:
 
     def __init__(self, learning_rate=0.01):
         self.learning_rate = learning_rate
