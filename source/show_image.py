@@ -17,6 +17,7 @@ class Video:
         n = 0
         imgs = []
         init = time.time() * 1000
+        key_pressed = None
 
         while (True):
             curr = time.time() * 1000
@@ -40,14 +41,16 @@ class Video:
                 cv2.putText(img, "category: %s, acc: %s" % (category, accuracy), (10, 19), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (255,255,255))
                 cv2.imshow('frame', img)
 
-                if cv2.waitKey(1) & 0xFF == ord('q'):
+                key_pressed = cv2.waitKey(1) & 0xFF
+                key_pressed = chr(key_pressed) if key_pressed < 255 else None
+                if key_pressed == 'q':
                     cv2.destroyAllWindows()
                     raise GeneratorExit()
 
             if n >= num:
                 break
 
-        return imgs
+        return imgs, key_pressed if key_pressed < 254 else None
 
 if __name__ == '__main__':
     video = Video('banana', 0.3)
