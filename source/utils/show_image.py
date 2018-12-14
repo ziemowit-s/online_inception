@@ -1,14 +1,13 @@
 import cv2
 import time
 
-DIM = (round(1280.0 * 0.5), round(720.0 * 0.5))
-
 
 class Video:
-    def __init__(self, category='-1', interval=0.1):
+    def __init__(self, category='-1', interval=0.1, dim=(1280, 720)):
         self.category = category
         self.interval = interval * 1000
         self.cap = cv2.VideoCapture(0)
+        self.dim = dim
 
     def get_images(self, num, is_show=False, category_name=None, accuracy=None):
         category = 'NO_CAT' if category_name is None else str(category_name)
@@ -32,12 +31,12 @@ class Video:
             img = cv2.cvtColor(frame, cv2.COLOR_RGB2RGBA)
 
             # perform the actual resizing of the image and show it
-            img = cv2.resize(img, DIM, interpolation=cv2.INTER_AREA)
+            img = cv2.resize(img, self.dim, interpolation=cv2.INTER_AREA)
             img_byte = cv2.imencode('.jpg', img)[1].tostring()
 
             if is_show:
-                cv2.rectangle(img, (0, 0), (DIM[0], 25), (0, 0, 0), -1)
-                cv2.putText(img, "cat: %s, acc: %s" % (category, accuracy), (10, 19), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (255,255,255))
+                cv2.rectangle(img, (0, 0), (self.dim[0], 50), (0, 0, 0), -1)
+                cv2.putText(img, "CATEGORY: %s, ACCURACY: %s" % (category, accuracy), (10, 35), cv2.FONT_HERSHEY_COMPLEX, 1, (255,255,255))
                 cv2.imshow('frame', img)
 
                 key_pressed = cv2.waitKey(1) & 0xFF

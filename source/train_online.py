@@ -6,7 +6,7 @@ from utils.props import Props
 from utils.show_image import Video
 from utils.utils import get_model_info, create_model_graph, add_jpeg_decoding
 
-CLASS_NUMBER = 2
+CLASS_NUMBER = 3
 
 model_path = '../data/inception_dir/classify_image_graph_def.pb'
 model_info = get_model_info()
@@ -19,7 +19,7 @@ category = 'NO_CAT'
 
 with tf.Session(graph=graph) as sess:
 
-    video = Video(interval=0.1)
+    video = Video(interval=0.01)
     retrain = Model(learning_rate=props.learning_rate)
 
     jpeg_data_tensor, decoded_image_tensor = add_jpeg_decoding(
