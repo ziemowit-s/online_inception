@@ -1,10 +1,10 @@
 import numpy as np
 import tensorflow as tf
 
-from model import Model
-from props import Props
-from show_image import Video
-from utils import get_model_info, create_model_graph, add_jpeg_decoding
+from utils.model import Model
+from utils.props import Props
+from utils.show_image import Video
+from utils.utils import get_model_info, create_model_graph, add_jpeg_decoding
 
 CLASS_NUMBER = 2
 

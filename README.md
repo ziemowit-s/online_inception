@@ -10,4 +10,4 @@
 
 * run:
 
-```python online.py```
+```python train_online.py```
