@@ -1,11 +1,11 @@
 import numpy as np
 import tensorflow as tf
 
-from source.model import Model
-from source.show_image import Video
-from source.utils import get_model_info, Props, create_model_graph, add_jpeg_decoding
+from model import Model
+from show_image import Video
+from utils import get_model_info, Props, create_model_graph, add_jpeg_decoding
 
-CLASS_NUMBER = 10
+CLASS_NUMBER = 2
 
 model_path = '../data/inception_dir/classify_image_graph_def.pb'
 model_info = get_model_info()
