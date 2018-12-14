@@ -2,8 +2,9 @@ import numpy as np
 import tensorflow as tf
 
 from model import Model
+from props import Props
 from show_image import Video
-from utils import get_model_info, Props, create_model_graph, add_jpeg_decoding
+from utils import get_model_info, create_model_graph, add_jpeg_decoding
 
 CLASS_NUMBER = 2
 
@@ -50,13 +51,12 @@ with tf.Session(graph=graph) as sess:
     train_ground_truth = []
 
     i = 0
-    while(True):
+    while True:
         try:
             imgs = video.get_images(1, is_show=True, category_name=category, accuracy=accuracy)
         except GeneratorExit:
             print('application stopped by user')
             break
-
 
         for img, key_pressed in imgs:
             tensor = retrain.run_bottleneck_on_image(sess, img, jpeg_data_tensor, decoded_image_tensor,

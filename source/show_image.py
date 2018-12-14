@@ -1,8 +1,8 @@
 import cv2
 import time
-from tensorflow.python.platform import gfile
 
 DIM = (round(1280.0 * 0.5), round(720.0 * 0.5))
+
 
 class Video:
     def __init__(self, category='-1', interval=0.1):
@@ -19,7 +19,7 @@ class Video:
         init = time.time() * 1000
         key_pressed = -1
 
-        while (True):
+        while True:
             curr = time.time() * 1000
             if curr - init < self.interval:
                 continue
@@ -52,6 +52,7 @@ class Video:
                 break
 
         return imgs
+
 
 if __name__ == '__main__':
     video = Video('banana', 0.3)
