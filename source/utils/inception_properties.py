@@ -1,6 +1,5 @@
 
 class Props:
-    image_dir = '../dara/flower_photos'
     model_dir = '../data/inception_dir'
     bottleneck_dir = '../data/tmp/bottleneck'
     final_tensor_name = 'final_result'
@@ -21,5 +20,3 @@ class Props:
     random_crop = 0  # A percentage determining how much of a margin to randomly crop off the training images.\
     random_scale = 0  # A percentage determining how much to randomly scale up the size of the training images by.\
     random_brightness = 0  # A percentage determining how much to randomly multiply the training image input pixels up or down by.\
-    random_scale = 0  # A percentage determining how much to randomly scale up the size of the training images by.\
-    random_crop = 0  # A percentage determining how much of a margin to randomly crop off the training images.\

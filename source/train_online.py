@@ -2,7 +2,7 @@ import numpy as np
 import tensorflow as tf
 
 from utils.model import Model
-from utils.props import Props
+from utils.inception_properties import Props
 from utils.show_image import Video
 from utils.utils import get_model_info, create_model_graph, add_jpeg_decoding
 
@@ -15,7 +15,7 @@ props = Props()
 graph, bottleneck_tensor, resized_image_tensor = create_model_graph(model_info, model_path)
 
 accuracy = 0.0
-category = 'NO_CAT'
+category = 'NO_CATEGORY'
 
 with tf.Session(graph=graph) as sess:
 

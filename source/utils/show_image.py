@@ -36,7 +36,8 @@ class Video:
 
             if is_show:
                 cv2.rectangle(img, (0, 0), (self.dim[0], 50), (0, 0, 0), -1)
-                cv2.putText(img, "CATEGORY: %s, ACCURACY: %s" % (category, accuracy), (10, 35), cv2.FONT_HERSHEY_COMPLEX, 1, (255,255,255))
+                cv2.putText(img, "CATEGORY: %s, ACCURACY: %s" % (category, accuracy), (10, 35),
+                            cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 255))
                 cv2.imshow('frame', img)
 
                 key_pressed = cv2.waitKey(1) & 0xFF
