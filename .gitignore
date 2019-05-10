@@ -1,10 +1,7 @@
 data/
 project/tmp/
 project/inception_dir/
-fruits
-flower_photos
-project/flower_photos/
-project/fruits/
+.idea/
 project/.idea/
 .DS_Store
 project/.DS_Store
